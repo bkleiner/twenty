@@ -1,7 +1,6 @@
 import { Command, CommandRunner } from 'nest-commander';
 
 import { PrismaService } from 'src/database/prisma.service';
-import { DataSourceMetadataService } from 'src/metadata/data-source-metadata/data-source-metadata.service';
 import { TenantManagerService } from 'src/tenant-manager/tenant-manager.service';
 
 @Command({
@@ -11,7 +10,6 @@ import { TenantManagerService } from 'src/tenant-manager/tenant-manager.service'
 export class MigrateOldSchemaCommand extends CommandRunner {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly dataSourceMetadataService: DataSourceMetadataService,
     private readonly tenantManagerService: TenantManagerService,
   ) {
     super();
