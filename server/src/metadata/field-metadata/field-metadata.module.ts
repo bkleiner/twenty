@@ -10,10 +10,10 @@ import { SortDirection } from '@ptc-org/nestjs-query-core';
 import { TenantMigrationRunnerModule } from 'src/tenant-migration-runner/tenant-migration-runner.module';
 import { TenantMigrationModule } from 'src/metadata/tenant-migration/tenant-migration.module';
 import { ObjectMetadataModule } from 'src/metadata/object-metadata/object-metadata.module';
-import { FieldMetadataEntity } from 'src/database/typeorm/metadata/entities/field-metadata.entity';
 import { JwtAuthGuard } from 'src/guards/jwt.auth.guard';
 
 import { FieldMetadataService } from './field-metadata.service';
+import { FieldMetadataEntity } from './field-metadata.entity';
 
 import { CreateFieldInput } from './dtos/create-field.input';
 import { FieldMetadataDTO } from './dtos/field-metadata.dto';

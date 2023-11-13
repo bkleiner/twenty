@@ -10,8 +10,9 @@ import { TypeOrmQueryService } from '@ptc-org/nestjs-query-typeorm';
 
 import { TenantMigrationService } from 'src/metadata/tenant-migration/tenant-migration.service';
 import { TenantMigrationRunnerService } from 'src/tenant-migration-runner/tenant-migration-runner.service';
-import { ObjectMetadataEntity } from 'src/database/typeorm/metadata/entities/object-metadata.entity';
-import { TenantMigrationTableAction } from 'src/database/typeorm/metadata/entities/tenant-migration.entity';
+import { TenantMigrationTableAction } from 'src/metadata/tenant-migration/tenant-migration.entity';
+
+import { ObjectMetadataEntity } from './object-metadata.entity';
 
 import { CreateObjectInput } from './dtos/create-object.input';
 
@@ -77,14 +78,32 @@ export class ObjectMetadataService extends TypeOrmQueryService<ObjectMetadataEnt
   public async getObjectMetadataFromWorkspaceId(workspaceId: string) {
     return this.objectMetadataRepository.find({
       where: { workspaceId },
-      relations: ['fields'],
+      relations: [
+        'fields',
+        'fields.fromRelationMetadata',
+        'fields.fromRelationMetadata.fromObjectMetadata',
+        'fields.fromRelationMetadata.toObjectMetadata',
+        'fields.fromRelationMetadata.toObjectMetadata.fields',
+        'fields.toRelationMetadata',
+        'fields.toRelationMetadata.fromObjectMetadata',
+        'fields.toRelationMetadata.toObjectMetadata',
+      ],
     });
   }
 
   public async getObjectMetadataFromDataSourceId(dataSourceId: string) {
     return this.objectMetadataRepository.find({
       where: { dataSourceId },
-      relations: ['fields'],
+      relations: [
+        'fields',
+        'fields.fromRelationMetadata',
+        'fields.fromRelationMetadata.fromObjectMetadata',
+        'fields.fromRelationMetadata.toObjectMetadata',
+        'fields.fromRelationMetadata.toObjectMetadata.fields',
+        'fields.toRelationMetadata',
+        'fields.toRelationMetadata.fromObjectMetadata',
+        'fields.toRelationMetadata.toObjectMetadata',
+      ],
     });
   }
 

@@ -3,14 +3,14 @@ import { Injectable } from '@nestjs/common';
 import { QueryRunner, Table, TableColumn, TableForeignKey } from 'typeorm';
 
 import { TenantMigrationService } from 'src/metadata/tenant-migration/tenant-migration.service';
+import { TenantDataSourceService } from 'src/tenant-datasource/tenant-datasource.service';
 import {
   TenantMigrationTableAction,
   TenantMigrationColumnAction,
   TenantMigrationColumnActionType,
   TenantMigrationColumnCreate,
   TenantMigrationColumnRelation,
-} from 'src/database/typeorm/metadata/entities/tenant-migration.entity';
-import { TenantDataSourceService } from 'src/tenant-datasource/tenant-datasource.service';
+} from 'src/metadata/tenant-migration/tenant-migration.entity';
 
 import { customTableDefaultColumns } from './utils/custom-table-default-column.util';
 

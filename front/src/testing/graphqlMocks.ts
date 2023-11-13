@@ -7,7 +7,7 @@ import { CREATE_EVENT } from '@/analytics/graphql/queries/createEvent';
 import { GET_CLIENT_CONFIG } from '@/client-config/graphql/queries/getClientConfig';
 import { INSERT_ONE_COMPANY } from '@/companies/graphql/mutations/insertOneCompany';
 import { GET_COMPANIES } from '@/companies/graphql/queries/getCompanies';
-import { FIND_MANY_METADATA_OBJECTS } from '@/metadata/graphql/queries';
+import { FIND_MANY_METADATA_OBJECTS } from '@/object-metadata/graphql/queries';
 import { INSERT_ONE_PERSON } from '@/people/graphql/mutations/insertOnePerson';
 import { UPDATE_ONE_PERSON } from '@/people/graphql/mutations/updateOnePerson';
 import { GET_PEOPLE } from '@/people/graphql/queries/getPeople';
@@ -317,7 +317,7 @@ export const graphqlMocks = [
       return res(ctx.data({ objects: mockedObjectMetadataItems }));
     },
   ),
-  graphql.query('FindManyviewsV2', (req, res, ctx) => {
+  graphql.query('FindManyViewsV2', (req, res, ctx) => {
     const objectMetadataId = req.variables.filter.objectMetadataId.eq;
     const viewType = req.variables.filter.type.eq;
 
@@ -334,12 +334,18 @@ export const graphqlMocks = [
               node: view,
               cursor: null,
             })),
+          pageInfo: {
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: null,
+            endCursor: null,
+          },
         },
       }),
     );
   }),
-  graphql.query('FindManyviewFieldsV2', (req, res, ctx) => {
-    const viewId = req.variables.filter.viewId.eq;
+  graphql.query('FindManyViewFieldsV2', (req, res, ctx) => {
+    const viewId = req.variables.filter.view.eq;
 
     return res(
       ctx.data({
@@ -350,6 +356,12 @@ export const graphqlMocks = [
               node: viewField,
               cursor: null,
             })),
+          pageInfo: {
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: null,
+            endCursor: null,
+          },
         },
       }),
     );

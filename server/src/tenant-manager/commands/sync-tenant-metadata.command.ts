@@ -1,6 +1,6 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
 
-import { DataSourceMetadataService } from 'src/metadata/data-source-metadata/data-source-metadata.service';
+import { DataSourceService } from 'src/metadata/data-source/data-source.service';
 import { TenantManagerService } from 'src/tenant-manager/tenant-manager.service';
 
 // TODO: implement dry-run
@@ -15,7 +15,7 @@ interface RunTenantMigrationsOptions {
 export class SyncTenantMetadataCommand extends CommandRunner {
   constructor(
     private readonly tenantManagerService: TenantManagerService,
-    private readonly dataSourceMetadataService: DataSourceMetadataService,
+    private readonly dataSourceService: DataSourceService,
   ) {
     super();
   }
@@ -26,7 +26,7 @@ export class SyncTenantMetadataCommand extends CommandRunner {
   ): Promise<void> {
     // TODO: run in a dedicated job + run queries in a transaction.
     const dataSourceMetadata =
-      await this.dataSourceMetadataService.getLastDataSourceMetadataFromWorkspaceIdOrFail(
+      await this.dataSourceService.getLastDataSourceMetadataFromWorkspaceIdOrFail(
         options.workspaceId,
       );
 

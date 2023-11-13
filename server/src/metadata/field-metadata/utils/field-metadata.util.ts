@@ -3,11 +3,11 @@ import { FieldMetadataTargetColumnMap } from 'src/tenant/schema-builder/interfac
 import {
   FieldMetadataEntity,
   FieldMetadataType,
-} from 'src/database/typeorm/metadata/entities/field-metadata.entity';
+} from 'src/metadata/field-metadata/field-metadata.entity';
 import {
   TenantMigrationColumnAction,
   TenantMigrationColumnActionType,
-} from 'src/database/typeorm/metadata/entities/tenant-migration.entity';
+} from 'src/metadata/tenant-migration/tenant-migration.entity';
 
 /**
  * Generate a target column map for a given type, this is used to map the field to the correct column(s) in the database.

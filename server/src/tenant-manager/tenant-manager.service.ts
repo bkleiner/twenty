@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common';
 
 import { DataSource, EntityManager } from 'typeorm';
 
-import { DataSourceEntity } from 'src/database/typeorm/metadata/entities/data-source.entity';
-import { DataSourceMetadataService } from 'src/metadata/data-source-metadata/data-source-metadata.service';
+import { DataSourceService } from 'src/metadata/data-source/data-source.service';
 import { FieldMetadataService } from 'src/metadata/field-metadata/field-metadata.service';
 import { ObjectMetadataService } from 'src/metadata/object-metadata/object-metadata.service';
 import { TenantMigrationRunnerService } from 'src/tenant-migration-runner/tenant-migration-runner.service';
 import { TenantMigrationService } from 'src/metadata/tenant-migration/tenant-migration.service';
 import { standardObjectsPrefillData } from 'src/tenant-manager/standard-objects-prefill-data/standard-objects-prefill-data';
 import { TenantDataSourceService } from 'src/tenant-datasource/tenant-datasource.service';
-import { standardObjectsMetadata } from 'src/tenant-manager/standard-objects-metadata/standard-object-metadata';
+import { DataSourceEntity } from 'src/metadata/data-source/data-source.entity';
+
+import { standardObjectsMetadata } from './standard-objects/standard-object-metadata';
 
 @Injectable()
 export class TenantManagerService {
@@ -20,7 +21,7 @@ export class TenantManagerService {
     private readonly migrationRunnerService: TenantMigrationRunnerService,
     private readonly objectMetadataService: ObjectMetadataService,
     private readonly fieldMetadataService: FieldMetadataService,
-    private readonly dataSourceMetadataService: DataSourceMetadataService,
+    private readonly dataSourceService: DataSourceService,
   ) {}
 
   private mainDataSource: DataSource;
@@ -42,7 +43,7 @@ export class TenantManagerService {
       await this.tenantDataSourceService.createWorkspaceDBSchema(workspaceId);
 
     const dataSourceMetadata =
-      await this.dataSourceMetadataService.createDataSourceMetadata(
+      await this.dataSourceService.createDataSourceMetadata(
         workspaceId,
         schemaName,
       );
@@ -172,7 +173,7 @@ export class TenantManagerService {
     await this.fieldMetadataService.deleteFieldsMetadata(workspaceId);
     await this.objectMetadataService.deleteObjectsMetadata(workspaceId);
     await this.tenantMigrationService.delete(workspaceId);
-    await this.dataSourceMetadataService.delete(workspaceId);
+    await this.dataSourceService.delete(workspaceId);
     // Delete schema
     await this.tenantDataSourceService.deleteWorkspaceDBSchema(workspaceId);
   }

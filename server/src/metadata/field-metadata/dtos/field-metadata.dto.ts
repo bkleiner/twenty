@@ -13,8 +13,8 @@ import {
   Relation,
 } from '@ptc-org/nestjs-query-graphql';
 
-import { FieldMetadataType } from 'src/database/typeorm/metadata/entities/field-metadata.entity';
 import { RelationMetadataDTO } from 'src/metadata/relation-metadata/dtos/relation-metadata.dto';
+import { FieldMetadataType } from 'src/metadata/field-metadata/field-metadata.entity';
 
 registerEnumType(FieldMetadataType, {
   name: 'FieldMetadataType',

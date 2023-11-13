@@ -17,10 +17,11 @@ import {
 import { TenantMigrationRunnerService } from 'src/tenant-migration-runner/tenant-migration-runner.service';
 import { TenantMigrationService } from 'src/metadata/tenant-migration/tenant-migration.service';
 import { ObjectMetadataService } from 'src/metadata/object-metadata/object-metadata.service';
-import { FieldMetadataEntity } from 'src/database/typeorm/metadata/entities/field-metadata.entity';
 import { FieldMetadataDTO } from 'src/metadata/field-metadata/dtos/field-metadata.dto';
 import { CreateFieldInput } from 'src/metadata/field-metadata/dtos/create-field.input';
-import { TenantMigrationTableAction } from 'src/database/typeorm/metadata/entities/tenant-migration.entity';
+import { TenantMigrationTableAction } from 'src/metadata/tenant-migration/tenant-migration.entity';
+
+import { FieldMetadataEntity } from './field-metadata.entity';
 
 @Injectable()
 export class FieldMetadataService extends TypeOrmQueryService<FieldMetadataEntity> {

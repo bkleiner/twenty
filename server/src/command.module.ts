@@ -4,8 +4,8 @@ import { DatabaseCommandModule } from 'src/database/commands/database-command.mo
 
 import { AppModule } from './app.module';
 
-import { TenantMigrationRunnerCommandsModule } from './tenant-migration-runner/commands/tenant-migration-runner-commands.module';
 import { TenantManagerCommandsModule } from './tenant-manager/commands/tenant-manager-commands.module';
+import { TenantMigrationRunnerCommandsModule } from './tenant-migration-runner/commands/tenant-migration-runner-commands.module';
 
 @Module({
   imports: [

@@ -11,8 +11,8 @@ import {
 
 import { FieldMetadataTargetColumnMap } from 'src/tenant/schema-builder/interfaces/field-metadata-target-column-map.interface';
 
-import { FieldMetadataType } from 'src/database/typeorm/metadata/entities/field-metadata.entity';
 import { BeforeCreateOneField } from 'src/metadata/field-metadata/hooks/before-create-one-field.hook';
+import { FieldMetadataType } from 'src/metadata/field-metadata/field-metadata.entity';
 
 @InputType()
 @BeforeCreateOne(BeforeCreateOneField)
@@ -21,12 +21,10 @@ export class CreateFieldInput {
   @IsNotEmpty()
   @Field()
   name: string;
-
   @IsString()
   @IsNotEmpty()
   @Field()
   label: string;
-
   @IsEnum(FieldMetadataType)
   @IsNotEmpty()
   @Field(() => FieldMetadataType)
@@ -40,7 +38,6 @@ export class CreateFieldInput {
   @IsOptional()
   @Field({ nullable: true })
   description?: string;
-
   @IsString()
   @IsOptional()
   @Field({ nullable: true })

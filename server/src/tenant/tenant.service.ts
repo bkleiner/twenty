@@ -5,7 +5,7 @@ import { GraphQLSchema, printSchema } from 'graphql';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { gql } from 'graphql-tag';
 
-import { DataSourceMetadataService } from 'src/metadata/data-source-metadata/data-source-metadata.service';
+import { DataSourceService } from 'src/metadata/data-source/data-source.service';
 import { ObjectMetadataService } from 'src/metadata/object-metadata/object-metadata.service';
 
 import { GraphQLSchemaFactory } from './schema-builder/graphql-schema.factory';
@@ -15,7 +15,7 @@ import { ResolverFactory } from './resolver-builder/resolver.factory';
 @Injectable()
 export class TenantService {
   constructor(
-    private readonly dataSourceMetadataService: DataSourceMetadataService,
+    private readonly dataSourceService: DataSourceService,
     private readonly objectMetadataService: ObjectMetadataService,
     private readonly graphQLSchemaFactory: GraphQLSchemaFactory,
     private readonly resolverFactory: ResolverFactory,
@@ -27,11 +27,11 @@ export class TenantService {
     }
 
     const dataSourcesMetadata =
-      await this.dataSourceMetadataService.getDataSourcesMetadataFromWorkspaceId(
+      await this.dataSourceService.getDataSourcesMetadataFromWorkspaceId(
         workspaceId,
       );
 
-    // Can't find any data sources for this workspace
+    // Can'f find any data sources for this workspace
     if (!dataSourcesMetadata || dataSourcesMetadata.length === 0) {
       return new GraphQLSchema({});
     }

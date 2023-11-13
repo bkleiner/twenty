@@ -223,9 +223,8 @@ export const RecordTableHeader = () => {
             />
           </StyledColumnHeaderCell>
         ))}
-
-        <StyledPlusIconHeaderCell>
-          {hiddenTableColumns.length > 0 && (
+        {hiddenTableColumns.length > 0 && (
+          <StyledPlusIconHeaderCell>
             <DropdownScope
               dropdownScopeId={HIDDEN_TABLE_COLUMN_DROPDOWN_SCOPE_ID}
             >
@@ -242,8 +241,8 @@ export const RecordTableHeader = () => {
                 }}
               />
             </DropdownScope>
-          )}
-        </StyledPlusIconHeaderCell>
+          </StyledPlusIconHeaderCell>
+        )}
       </tr>
     </StyledTableHead>
   );

@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 import { useRecoilCallback } from 'recoil';
 
-import { useFindOneObjectMetadataItem } from '@/metadata/hooks/useFindOneObjectMetadataItem';
+import { useFindOneObjectMetadataItem } from '@/object-metadata/hooks/useFindOneObjectMetadataItem';
 import { ViewField } from '@/views/types/ViewField';
 import { getViewScopedStateValuesFromSnapshot } from '@/views/utils/getViewScopedStateValuesFromSnapshot';
 
@@ -16,7 +16,7 @@ export const useViewFields = (viewScopeId: string) => {
   const persistViewFields = useRecoilCallback(
     ({ snapshot }) =>
       async (viewFieldsToPersist: ViewField[], viewId?: string) => {
-        const { viewObjectId, currentViewId, savedViewFieldsByKey } =
+        const { viewObjectMetadataId, currentViewId, savedViewFieldsByKey } =
           getViewScopedStateValuesFromSnapshot({
             snapshot,
             viewScopeId,
@@ -25,7 +25,7 @@ export const useViewFields = (viewScopeId: string) => {
 
         const viewIdToPersist = viewId ?? currentViewId;
 
-        if (!currentViewId || !savedViewFieldsByKey || !viewObjectId) {
+        if (!currentViewId || !savedViewFieldsByKey || !viewObjectMetadataId) {
           return;
         }
 
@@ -41,7 +41,7 @@ export const useViewFields = (viewScopeId: string) => {
                 variables: {
                   input: {
                     fieldMetadataId: viewField.fieldMetadataId,
-                    viewId: viewIdToPersist,
+                    view: viewIdToPersist,
                     isVisible: viewField.isVisible,
                     size: viewField.size,
                     position: viewField.position,

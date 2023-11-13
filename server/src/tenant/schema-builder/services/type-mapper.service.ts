@@ -21,6 +21,7 @@ import {
   NumberScalarMode,
 } from 'src/tenant/schema-builder/interfaces/build-schema-optionts.interface';
 
+import { FieldMetadataType } from 'src/metadata/field-metadata/field-metadata.entity';
 import {
   UUIDFilterType,
   StringFilterType,
@@ -28,9 +29,9 @@ import {
   DateFilterType,
   FloatFilterType,
   IntFilterType,
+  BooleanFilterType,
 } from 'src/tenant/schema-builder/graphql-types/input';
 import { OrderByDirectionType } from 'src/tenant/schema-builder/graphql-types/enum';
-import { FieldMetadataType } from 'src/database/typeorm/metadata/entities/field-metadata.entity';
 
 export interface TypeOptions<T = any> {
   nullable?: boolean;
@@ -60,6 +61,7 @@ export class TypeMapperService {
       [FieldMetadataType.DATE, dateScalar],
       [FieldMetadataType.BOOLEAN, GraphQLBoolean],
       [FieldMetadataType.NUMBER, numberScalar],
+      [FieldMetadataType.RELATION, GraphQLID],
     ]);
 
     return typeScalarMapping.get(fieldMetadataType);
@@ -85,8 +87,9 @@ export class TypeMapperService {
       [FieldMetadataType.PHONE, StringFilterType],
       [FieldMetadataType.EMAIL, StringFilterType],
       [FieldMetadataType.DATE, dateFilter],
-      [FieldMetadataType.BOOLEAN, GraphQLBoolean],
+      [FieldMetadataType.BOOLEAN, BooleanFilterType],
       [FieldMetadataType.NUMBER, numberScalar],
+      [FieldMetadataType.RELATION, UUIDFilterType],
     ]);
 
     return typeFilterMapping.get(fieldMetadataType);

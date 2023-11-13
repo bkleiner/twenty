@@ -13,12 +13,13 @@ import { FieldMetadataService } from 'src/metadata/field-metadata/field-metadata
 import { CreateRelationInput } from 'src/metadata/relation-metadata/dtos/create-relation.input';
 import { TenantMigrationRunnerService } from 'src/tenant-migration-runner/tenant-migration-runner.service';
 import { TenantMigrationService } from 'src/metadata/tenant-migration/tenant-migration.service';
+import { FieldMetadataType } from 'src/metadata/field-metadata/field-metadata.entity';
+import { TenantMigrationColumnActionType } from 'src/metadata/tenant-migration/tenant-migration.entity';
+
 import {
   RelationMetadataEntity,
-  RelationType,
-} from 'src/database/typeorm/metadata/entities/relation-metadata.entity';
-import { FieldMetadataType } from 'src/database/typeorm/metadata/entities/field-metadata.entity';
-import { TenantMigrationColumnActionType } from 'src/database/typeorm/metadata/entities/tenant-migration.entity';
+  RelationMetadataType,
+} from './relation-metadata.entity';
 
 @Injectable()
 export class RelationMetadataService extends TypeOrmQueryService<RelationMetadataEntity> {
@@ -36,7 +37,7 @@ export class RelationMetadataService extends TypeOrmQueryService<RelationMetadat
   override async createOne(
     record: CreateRelationInput,
   ): Promise<RelationMetadataEntity> {
-    if (record.relationType === RelationType.MANY_TO_MANY) {
+    if (record.relationType === RelationMetadataType.MANY_TO_MANY) {
       throw new BadRequestException(
         'Many to many relations are not supported yet',
       );

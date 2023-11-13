@@ -9,12 +9,7 @@ import {
 } from '@ptc-org/nestjs-query-graphql';
 
 import { ObjectMetadataDTO } from 'src/metadata/object-metadata/dtos/object-metadata.dto';
-
-export enum RelationType {
-  ONE_TO_ONE = 'ONE_TO_ONE',
-  ONE_TO_MANY = 'ONE_TO_MANY',
-  MANY_TO_MANY = 'MANY_TO_MANY',
-}
+import { RelationMetadataType } from 'src/metadata/relation-metadata/relation-metadata.entity';
 
 @ObjectType('relation')
 @Authorize({
@@ -35,7 +30,7 @@ export class RelationMetadataDTO {
   id: string;
 
   @Field()
-  relationType: RelationType;
+  relationType: RelationMetadataType;
 
   @Field()
   fromObjectMetadataId: string;

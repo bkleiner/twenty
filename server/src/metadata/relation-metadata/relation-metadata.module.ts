@@ -11,9 +11,9 @@ import { ObjectMetadataModule } from 'src/metadata/object-metadata/object-metada
 import { TenantMigrationRunnerModule } from 'src/tenant-migration-runner/tenant-migration-runner.module';
 import { TenantMigrationModule } from 'src/metadata/tenant-migration/tenant-migration.module';
 import { JwtAuthGuard } from 'src/guards/jwt.auth.guard';
-import { RelationMetadataEntity } from 'src/database/typeorm/metadata/entities/relation-metadata.entity';
 
 import { RelationMetadataService } from './relation-metadata.service';
+import { RelationMetadataEntity } from './relation-metadata.entity';
 
 import { CreateRelationInput } from './dtos/create-relation.input';
 import { RelationMetadataDTO } from './dtos/relation-metadata.dto';
@@ -40,7 +40,6 @@ import { RelationMetadataDTO } from './dtos/relation-metadata.dto';
           CreateDTOClass: CreateRelationInput,
           enableTotalCount: true,
           pagingStrategy: PagingStrategies.CURSOR,
-          read: { many: { disabled: true } },
           create: { many: { disabled: true } },
           update: { disabled: true },
           delete: { disabled: true },

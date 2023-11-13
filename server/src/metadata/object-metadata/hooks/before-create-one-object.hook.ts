@@ -5,14 +5,14 @@ import {
   CreateOneInputType,
 } from '@ptc-org/nestjs-query-graphql';
 
-import { DataSourceMetadataService } from 'src/metadata/data-source-metadata/data-source-metadata.service';
+import { DataSourceService } from 'src/metadata/data-source/data-source.service';
 import { CreateObjectInput } from 'src/metadata/object-metadata/dtos/create-object.input';
 
 @Injectable()
 export class BeforeCreateOneObject<T extends CreateObjectInput>
   implements BeforeCreateOneHook<T, any>
 {
-  constructor(readonly dataSourceMetadataService: DataSourceMetadataService) {}
+  constructor(readonly dataSourceService: DataSourceService) {}
 
   async run(
     instance: CreateOneInputType<T>,
@@ -25,7 +25,7 @@ export class BeforeCreateOneObject<T extends CreateObjectInput>
     }
 
     const lastDataSourceMetadata =
-      await this.dataSourceMetadataService.getLastDataSourceMetadataFromWorkspaceIdOrFail(
+      await this.dataSourceService.getLastDataSourceMetadataFromWorkspaceIdOrFail(
         workspaceId,
       );
 

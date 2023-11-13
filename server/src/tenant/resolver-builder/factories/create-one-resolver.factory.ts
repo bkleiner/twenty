@@ -7,9 +7,7 @@ import {
 import { SchemaBuilderContext } from 'src/tenant/schema-builder/interfaces/schema-builder-context.interface';
 import { ResolverBuilderFactoryInterface } from 'src/tenant/resolver-builder/interfaces/resolver-builder-factory.interface';
 
-import { PGGraphQLQueryRunner } from 'src/tenant/resolver-builder/pg-graphql/pg-graphql-query-runner';
-import { FieldMetadataEntity } from 'src/database/typeorm/metadata/entities/field-metadata.entity';
-import { TenantDataSourceService } from 'src/tenant-datasource/tenant-datasource.service';
+import { QueryRunnerService } from 'src/tenant/query-runner/query-runner.service';
 
 @Injectable()
 export class CreateOneResolverFactory
@@ -17,23 +15,18 @@ export class CreateOneResolverFactory
 {
   public static methodName = 'createOne' as const;
 
-  constructor(
-    private readonly tenantDataSourceService: TenantDataSourceService,
-  ) {}
+  constructor(private readonly queryRunnerService: QueryRunnerService) {}
 
   create(context: SchemaBuilderContext): Resolver<CreateOneResolverArgs> {
     const internalContext = context;
 
     return (_source, args, context, info) => {
-      const runner = new PGGraphQLQueryRunner(this.tenantDataSourceService, {
+      return this.queryRunnerService.createOne(args, {
         targetTableName: internalContext.targetTableName,
         workspaceId: internalContext.workspaceId,
         info,
-        fieldMetadataCollection:
-          internalContext.fieldMetadataCollection as FieldMetadataEntity[],
+        fieldMetadataCollection: internalContext.fieldMetadataCollection,
       });
-
-      return runner.createOne(args);
     };
   }
 }

@@ -3,12 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { IsNull, Repository } from 'typeorm';
 
+import { standardMigrations } from './standard-migrations';
 import {
   TenantMigrationEntity,
   TenantMigrationTableAction,
-} from 'src/database/typeorm/metadata/entities/tenant-migration.entity';
-
-import { standardMigrations } from './standard-migrations';
+} from './tenant-migration.entity';
 
 @Injectable()
 export class TenantMigrationService {

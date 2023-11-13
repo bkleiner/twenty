@@ -1,7 +1,7 @@
 import {
-  TenantMigrationTableAction,
   TenantMigrationColumnActionType,
-} from 'src/database/typeorm/metadata/entities/tenant-migration.entity';
+  TenantMigrationTableAction,
+} from 'src/metadata/tenant-migration/tenant-migration.entity';
 
 export const addViewFieldTable: TenantMigrationTableAction[] = [
   {
@@ -14,11 +14,6 @@ export const addViewFieldTable: TenantMigrationTableAction[] = [
     columns: [
       {
         columnName: 'fieldMetadataId',
-        columnType: 'varchar',
-        action: TenantMigrationColumnActionType.CREATE,
-      },
-      {
-        columnName: 'viewId',
         columnType: 'varchar',
         action: TenantMigrationColumnActionType.CREATE,
       },
@@ -36,6 +31,17 @@ export const addViewFieldTable: TenantMigrationTableAction[] = [
         columnName: 'size',
         columnType: 'integer',
         action: TenantMigrationColumnActionType.CREATE,
+      },
+      {
+        columnName: 'viewId',
+        columnType: 'uuid',
+        action: TenantMigrationColumnActionType.CREATE,
+      },
+      {
+        columnName: 'viewId',
+        referencedTableName: 'view',
+        referencedTableColumnName: 'id',
+        action: TenantMigrationColumnActionType.RELATION,
       },
     ],
   },
