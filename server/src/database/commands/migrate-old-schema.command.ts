@@ -51,7 +51,7 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     return activities.map((activity) => {
       return {
         id: activity.id,
-        body: activity.body,
+        /*body: activity.body,
         title: activity.title,
         type: activity.type,
         reminderAt: activity.reminderAt,
@@ -60,7 +60,7 @@ export class MigrateOldSchemaCommand extends CommandRunner {
         authorId: activity.authorId,
         assigneeId: activity.assigneeId,
         workspaceMemberAssigneeId: activity.workspaceMemberAssigneeId,
-        workspaceMemberAuthorId: activity.workspaceMemberAssigneeId,
+        workspaceMemberAuthorId: activity.workspaceMemberAssigneeId,*/
         createdAt: activity.createdAt,
         updatedAt: activity.updatedAt,
         deletedAt: activity.deletedAt,
@@ -73,9 +73,9 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     return activityTargets.map((activityTarget) => {
       return {
         id: activityTarget.id,
-        activityId: activityTarget.activityId,
+        /*activityId: activityTarget.activityId,
         personId: activityTarget.personId,
-        companyId: activityTarget.companyId,
+        companyId: activityTarget.companyId,*/
         createdAt: activityTarget.createdAt,
         updatedAt: activityTarget.updatedAt,
         deletedAt: activityTarget.deletedAt,
@@ -88,9 +88,9 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     return apiKeys.map((apiKey) => {
       return {
         id: apiKey.id,
-        name: apiKey.name,
+        /*name: apiKey.name,
         expiresAt: apiKey.expiresAt,
-        revokedAt: apiKey.revokedAt,
+        revokedAt: apiKey.revokedAt,*/
         createdAt: apiKey.createdAt,
         updatedAt: apiKey.updatedAt,
         deletedAt: apiKey.deletedAt,
@@ -103,14 +103,14 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     return attachments.map((attachment) => {
       return {
         id: attachment.id,
-        fullPath: attachment.fullPath,
+        /*fullPath: attachment.fullPath,
         type: attachment.type,
         name: attachment.name,
         authorId: attachment.authorId,
         activityId: attachment.activityId,
         workspaceMemberAuthorId: attachment.workspaceMemberAuthorId,
         companyId: attachment.companyId,
-        personId: attachment.personId,
+        personId: attachment.personId,*/
         createdAt: attachment.createdAt,
         updatedAt: attachment.updatedAt,
         deletedAt: attachment.deletedAt,
@@ -123,11 +123,11 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     return comments.map((comment) => {
       return {
         id: comment.id,
-        body: comment.body,
+        /*body: comment.body,
         authorId: comment.authorId,
         commentThreadId: comment.commentThreadId,
         activityId: comment.activityId,
-        workspaceMemberAuthorId: comment.workspaceMemberAuthorId,
+        workspaceMemberAuthorId: comment.workspaceMemberAuthorId,*/
         createdAt: comment.createdAt,
         updatedAt: comment.updatedAt,
         deletedAt: comment.deletedAt,
@@ -144,12 +144,12 @@ export class MigrateOldSchemaCommand extends CommandRunner {
         domainName: company.domainName,
         address: company.address,
         employees: company.employees,
-        accountOwnerId: company.accountOwnerId,
         linkedinUrl: company.linkedinUrl,
+        linkedinUrl_link: null,
+        accountOwnerId: company.accountOwnerId,
         annualRecurringRevenue: company.annualRecurringRevenue,
         idealCustomerProfile: company.idealCustomerProfile,
         xUrl: company.xUrl,
-        workspaceMemberAccountOwnerId: company.workspaceMemberAccountOwnerId,
         createdAt: company.createdAt,
         updatedAt: company.updatedAt,
         deletedAt: company.deletedAt,
@@ -162,9 +162,9 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     return favorites.map((favorite) => {
       return {
         id: favorite.id,
-        personId: favorite.personId,
+        /*personId: favorite.personId,
         companyId: favorite.companyId,
-        workspaceMemberId: favorite.workspaceMemberId,
+        workspaceMemberId: favorite.workspaceMemberId,*/
         workspaceId: favorite.workspaceId,
       };
     });
@@ -174,7 +174,7 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     return people.map((person) => {
       return {
         id: person.id,
-        email: person.email,
+        /*email: person.email,
         phone: person.phone,
         city: person.city,
         companyId: person.companyId,
@@ -183,11 +183,61 @@ export class MigrateOldSchemaCommand extends CommandRunner {
         jobTitle: person.jobTitle,
         linkedinUrl: person.linkedinUrl,
         avatarUrl: person.avatarUrl,
-        xUrl: person.xUrl,
+        xUrl: person.xUrl,*/
         createdAt: person.createdAt,
         updatedAt: person.updatedAt,
         deletedAt: person.deletedAt,
         workspaceId: person.workspaceId,
+      };
+    });
+  }
+
+  formatPipelineProgresses(pipelineProgresses) {
+    return pipelineProgresses.map((pipelineProgress) => {
+      return {
+        id: pipelineProgress.id,
+        /*pipelineId: pipelineProgress.pipelineId,
+        pipelineStageId: pipelineProgress.pipelineStageId,
+        amount: pipelineProgress.amount,
+        closeDate: pipelineProgress.closeDate,
+        pointOfContactId: pipelineProgress.pointOfContactId,
+        probability: pipelineProgress.probability,
+        companyId: pipelineProgress.companyId,*/
+        createdAt: pipelineProgress.createdAt,
+        updatedAt: pipelineProgress.updatedAt,
+        deletedAt: pipelineProgress.deletedAt,
+        workspaceId: pipelineProgress.workspaceId,
+      };
+    });
+  }
+
+  formatPipelineStages(pipelineStages) {
+    return pipelineStages.map((pipelineStage) => {
+      return {
+        id: pipelineStage.id,
+        /*name: pipelineStage.name,
+        type: pipelineStage.type,
+        color: pipelineStage.color,
+        pipelineId: pipelineStage.pipelineId,
+        position: pipelineStage.position,*/
+        createdAt: pipelineStage.createdAt,
+        updatedAt: pipelineStage.updatedAt,
+        deletedAt: pipelineStage.deletedAt,
+        workspaceId: pipelineStage.workspaceId,
+      };
+    });
+  }
+
+  formatUserSettings(userSettings) {
+    return userSettings.map((userSetting) => {
+      return {
+        id: userSetting.id,
+        /*colorScheme: userSetting.colorScheme,
+        locale: userSetting.locale,*/
+        createdAt: userSetting.createdAt,
+        updatedAt: userSetting.updatedAt,
+        deletedAt: null,
+        workspaceId: userSetting.workspaceId,
       };
     });
   }
@@ -241,6 +291,21 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     });
   }
 
+  formatWorkspaceMembers(workspaceMembers) {
+    return workspaceMembers.map((workspaceMember) => {
+      return {
+        id: workspaceMember.id,
+        /*userId: workspaceMember.userId,
+        allowImpersonation: workspaceMember.allowImpersonation,
+        settingsId: workspaceMember.settingsId,*/
+        createdAt: workspaceMember.createdAt,
+        updatedAt: workspaceMember.updatedAt,
+        deletedAt: workspaceMember.deletedAt,
+        workspaceId: workspaceMember.workspaceId,
+      };
+    });
+  }
+
   async getWorkspaces(options) {
     const where = options.workspaceId
       ? { id: { equals: options.workspaceId } }
@@ -259,9 +324,9 @@ export class MigrateOldSchemaCommand extends CommandRunner {
       const workspaces = await this.getWorkspaces(options);
       const activities: Array<any> = this.formatActivities(
         await this.prismaService.client
-          .$queryRaw`SELECT * FROM public."activity"`,
+          .$queryRaw`SELECT * FROM public."activities"`,
       );
-      const activityYTargets: Array<any> = this.formatActivityTargets(
+      const activityTargets: Array<any> = this.formatActivityTargets(
         await this.prismaService.client
           .$queryRaw`SELECT * FROM public."activity_targets"`,
       );
@@ -289,6 +354,20 @@ export class MigrateOldSchemaCommand extends CommandRunner {
         await this.prismaService.client
           .$queryRaw`SELECT * FROM public."people"`,
       );
+      const pipelineProgresses: Array<any> = this.formatPipelineProgresses(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."pipeline_progresses"`,
+      );
+      const pipelineStages: Array<any> = this.formatPipelineStages(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."pipeline_stages"`,
+      );
+      const userSettings: Array<any> = this.formatUserSettings(
+        await this.prismaService.client.$queryRaw`
+            SELECT u.id, u."colorScheme", u.locale, u."createdAt", u."updatedAt", w."workspaceId" 
+            FROM public."user_settings" AS u JOIN public."workspace_members" AS w ON w."settingsId"=u.id
+            `,
+      );
       const views: Array<any> = this.formatViews(
         await this.prismaService.client.$queryRaw`SELECT * FROM public."views"`,
       );
@@ -304,12 +383,86 @@ export class MigrateOldSchemaCommand extends CommandRunner {
         await this.prismaService.client
           .$queryRaw`SELECT * FROM public."viewSorts"`,
       );
+      const workspaceMembers: Array<any> = this.formatWorkspaceMembers(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."workspace_members"`,
+      );
       for (const workspace of workspaces) {
+        await this.copyData('activity', activities, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData('activityTarget', activityTargets, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData('apiKey', apiKeys, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData('attachment', attachments, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData('comment', comments, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
         await this.copyData('company', companies, workspace.id, [
+          'id',
           'name',
           'domainName',
           'address',
           'employees',
+          'linkedinUrl',
+          'linkedinUrl_link',
+          'xUrl',
+          'annualRecurringRevenue',
+          'idealCustomerProfile',
+          'accountOwnerId',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData('favorite', favorites, workspace.id, ['id']);
+        await this.copyData('person', people, workspace.id, [
+          'id',
+          /*'email',
+          'phone',
+          'city',
+          'companyId',
+          'workspaceId',
+          'firstName',
+          'lastName',
+          'jobTitle',
+          'linkedinUrl',
+          'avatarUrl',
+          'xUrl',*/
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData('opportunity', pipelineProgresses, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData('pipelineStep', pipelineStages, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
         ]);
         await this.copyData('view', views, workspace.id, [
           'id',
@@ -336,6 +489,18 @@ export class MigrateOldSchemaCommand extends CommandRunner {
           'viewId',
           'direction',
         ]);
+        await this.copyData('workspaceMember', workspaceMembers, workspace.id, [
+          'id',
+          'createdAt',
+          'updatedAt',
+          'deletedAt',
+        ]);
+        await this.copyData(
+          'workspaceMemberSetting',
+          userSettings,
+          workspace.id,
+          ['id', 'createdAt', 'updatedAt', 'deletedAt'],
+        );
       }
     } catch (e) {
       console.log(e);
