@@ -1,7 +1,11 @@
-import { Command, CommandRunner } from 'nest-commander';
+import { Command, CommandRunner, Option } from 'nest-commander';
 
 import { PrismaService } from 'src/database/prisma.service';
 import { TenantManagerService } from 'src/tenant-manager/tenant-manager.service';
+
+interface MigrateOldSchemaOptions {
+  workspaceId?: string;
+}
 
 @Command({
   name: 'database:migrate-old-schema',
@@ -13,6 +17,14 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     private readonly tenantManagerService: TenantManagerService,
   ) {
     super();
+  }
+
+  @Option({
+    flags: '-w, --workspaceId [workspace id]',
+    description: 'Specific workspaceId to apply cleaning',
+  })
+  parseWorkspace(val: string): string {
+    return val;
   }
 
   filterDataByWorkspace(data, workspaceId) {
@@ -84,9 +96,22 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     });
   }
 
-  async run() {
+  async getWorkspaces(options) {
+    const where = options.workspaceId
+      ? { id: { equals: options.workspaceId } }
+      : {};
+    return await this.prismaService.client.workspace.findMany({
+      where,
+      orderBy: [{ createdAt: 'asc' }],
+    });
+  }
+
+  async run(
+    _passedParam: string[],
+    options: MigrateOldSchemaOptions,
+  ): Promise<void> {
     try {
-      const workspaces = await this.prismaService.client.workspace.findMany();
+      const workspaces = await this.getWorkspaces(options);
       const views: Array<any> = this.formatViews(
         await this.prismaService.client.$queryRaw`SELECT * FROM public."views"`,
       );
