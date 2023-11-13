@@ -47,14 +47,147 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     );
   }
 
+  formatActivities(activities) {
+    return activities.map((activity) => {
+      return {
+        id: activity.id,
+        body: activity.body,
+        title: activity.title,
+        type: activity.type,
+        reminderAt: activity.reminderAt,
+        dueAt: activity.dueAt,
+        completedAt: activity.completedAt,
+        authorId: activity.authorId,
+        assigneeId: activity.assigneeId,
+        workspaceMemberAssigneeId: activity.workspaceMemberAssigneeId,
+        workspaceMemberAuthorId: activity.workspaceMemberAssigneeId,
+        createdAt: activity.createdAt,
+        updatedAt: activity.updatedAt,
+        deletedAt: activity.deletedAt,
+        workspaceId: activity.workspaceId,
+      };
+    });
+  }
+
+  formatActivityTargets(activityTargets) {
+    return activityTargets.map((activityTarget) => {
+      return {
+        id: activityTarget.id,
+        activityId: activityTarget.activityId,
+        personId: activityTarget.personId,
+        companyId: activityTarget.companyId,
+        createdAt: activityTarget.createdAt,
+        updatedAt: activityTarget.updatedAt,
+        deletedAt: activityTarget.deletedAt,
+        workspaceId: activityTarget.workspaceId,
+      };
+    });
+  }
+
+  formatApiKeys(apiKeys) {
+    return apiKeys.map((apiKey) => {
+      return {
+        id: apiKey.id,
+        name: apiKey.name,
+        expiresAt: apiKey.expiresAt,
+        revokedAt: apiKey.revokedAt,
+        createdAt: apiKey.createdAt,
+        updatedAt: apiKey.updatedAt,
+        deletedAt: apiKey.deletedAt,
+        workspaceId: apiKey.workspaceId,
+      };
+    });
+  }
+
+  formatAttachments(attachments) {
+    return attachments.map((attachment) => {
+      return {
+        id: attachment.id,
+        fullPath: attachment.fullPath,
+        type: attachment.type,
+        name: attachment.name,
+        authorId: attachment.authorId,
+        activityId: attachment.activityId,
+        workspaceMemberAuthorId: attachment.workspaceMemberAuthorId,
+        companyId: attachment.companyId,
+        personId: attachment.personId,
+        createdAt: attachment.createdAt,
+        updatedAt: attachment.updatedAt,
+        deletedAt: attachment.deletedAt,
+        workspaceId: attachment.workspaceId,
+      };
+    });
+  }
+
+  formatComments(comments) {
+    return comments.map((comment) => {
+      return {
+        id: comment.id,
+        body: comment.body,
+        authorId: comment.authorId,
+        commentThreadId: comment.commentThreadId,
+        activityId: comment.activityId,
+        workspaceMemberAuthorId: comment.workspaceMemberAuthorId,
+        createdAt: comment.createdAt,
+        updatedAt: comment.updatedAt,
+        deletedAt: comment.deletedAt,
+        workspaceId: comment.workspaceId,
+      };
+    });
+  }
+
   formatCompanies(companies) {
     return companies.map((company) => {
       return {
+        id: company.id,
         name: company.name,
         domainName: company.domainName,
         address: company.address,
         employees: company.employees,
+        accountOwnerId: company.accountOwnerId,
+        linkedinUrl: company.linkedinUrl,
+        annualRecurringRevenue: company.annualRecurringRevenue,
+        idealCustomerProfile: company.idealCustomerProfile,
+        xUrl: company.xUrl,
+        workspaceMemberAccountOwnerId: company.workspaceMemberAccountOwnerId,
+        createdAt: company.createdAt,
+        updatedAt: company.updatedAt,
+        deletedAt: company.deletedAt,
         workspaceId: company.workspaceId,
+      };
+    });
+  }
+
+  formatFavorites(favorites) {
+    return favorites.map((favorite) => {
+      return {
+        id: favorite.id,
+        personId: favorite.personId,
+        companyId: favorite.companyId,
+        workspaceMemberId: favorite.workspaceMemberId,
+        workspaceId: favorite.workspaceId,
+      };
+    });
+  }
+
+  formatPeople(people) {
+    return people.map((person) => {
+      return {
+        id: person.id,
+        email: person.email,
+        phone: person.phone,
+        city: person.city,
+        companyId: person.companyId,
+        firstName: person.firstName,
+        lastName: person.lastName,
+        jobTitle: person.jobTitle,
+        linkedinUrl: person.linkedinUrl,
+        avatarUrl: person.avatarUrl,
+        xUrl: person.xUrl,
+        createdAt: person.createdAt,
+        updatedAt: person.updatedAt,
+        deletedAt: person.deletedAt,
+        workspaceId: person.workspaceId,
       };
     });
   }
@@ -124,9 +257,37 @@ export class MigrateOldSchemaCommand extends CommandRunner {
   ): Promise<void> {
     try {
       const workspaces = await this.getWorkspaces(options);
+      const activities: Array<any> = this.formatActivities(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."activity"`,
+      );
+      const activityYTargets: Array<any> = this.formatActivityTargets(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."activity_targets"`,
+      );
+      const apiKeys: Array<any> = this.formatApiKeys(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."api_keys"`,
+      );
+      const attachments: Array<any> = this.formatAttachments(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."attachments"`,
+      );
+      const comments: Array<any> = this.formatComments(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."comments"`,
+      );
       const companies: Array<any> = this.formatCompanies(
         await this.prismaService.client
           .$queryRaw`SELECT * FROM public."companies"`,
+      );
+      const favorites: Array<any> = this.formatFavorites(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."favorites"`,
+      );
+      const people: Array<any> = this.formatPeople(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."people"`,
       );
       const views: Array<any> = this.formatViews(
         await this.prismaService.client.$queryRaw`SELECT * FROM public."views"`,
