@@ -47,6 +47,18 @@ export class MigrateOldSchemaCommand extends CommandRunner {
     );
   }
 
+  formatCompanies(companies) {
+    return companies.map((company) => {
+      return {
+        name: company.name,
+        domainName: company.domainName,
+        address: company.address,
+        employees: company.employees,
+        workspaceId: company.workspaceId,
+      };
+    });
+  }
+
   formatViews(views) {
     return views.map((view) => {
       return {
@@ -112,6 +124,10 @@ export class MigrateOldSchemaCommand extends CommandRunner {
   ): Promise<void> {
     try {
       const workspaces = await this.getWorkspaces(options);
+      const companies: Array<any> = this.formatCompanies(
+        await this.prismaService.client
+          .$queryRaw`SELECT * FROM public."companies"`,
+      );
       const views: Array<any> = this.formatViews(
         await this.prismaService.client.$queryRaw`SELECT * FROM public."views"`,
       );
@@ -128,6 +144,12 @@ export class MigrateOldSchemaCommand extends CommandRunner {
           .$queryRaw`SELECT * FROM public."viewSorts"`,
       );
       for (const workspace of workspaces) {
+        await this.copyData('company', companies, workspace.id, [
+          'name',
+          'domainName',
+          'address',
+          'employees',
+        ]);
         await this.copyData('view', views, workspace.id, [
           'id',
           'name',
